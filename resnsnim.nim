@@ -14,10 +14,10 @@ proc toRNS(number: BigInt, basis: Modules): RNSnumb =
     result[i] = number mod basisElement
 
 proc toString(rnsnumb: RNSnumb): string =
-  result.add("(")
+  result = "("
 
   for i in low(rnsnumb)..high(rnsnumb):
-    result.add($rnsnumb[i])
+    result.add(toString(rnsnumb[i]))
 
     if i != high(rnsnumb):
       result.add(",")
@@ -29,6 +29,9 @@ when isMainModule:
     test: BigInt  = initBigInt(25)
     mods: Modules = [3, 5, 7]
     resl: RNSnumb = toRNS(test, mods)
+
+  for i in 0..2:
+    echo resl[i]
 
   echo toString(resl)
 
