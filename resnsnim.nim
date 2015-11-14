@@ -8,32 +8,51 @@ type
   Modules = array[3, int]
   RNSnumb = array[3, BigInt]
 
-proc toRNS(number: BigInt, basis: Modules): RNSnumb =
+proc toRNS*(number: BigInt, basis: Modules): RNSnumb =
   for i in low(basis)..high(basis):
     let basisElement = initBigInt(basis[i])
     result[i] = number mod basisElement
 
-proc toString(rnsnumb: RNSnumb): string =
+proc toString*(rnsnumb: RNSnumb): string =
   result = "("
 
   for i in low(rnsnumb)..high(rnsnumb):
     result.add(toString(rnsnumb[i]))
-
-    if i != high(rnsnumb):
-      result.add(",")
+    if i != high(rnsnumb): result.add(",")
 
   result.add(")")
 
+proc RNSadd*(rnsnumb1: RNSnumb, rnsnumb2: RNSnumb, basis: Modules): RNSnumb =
+  if (len(rnsnumb1) == len(rnsnumb2)):
+    for i in low(basis)..high(basis):
+      let summa: BigInt = rnsnumb1[i] + rnsnumb1[i]
+      let basis: BigInt = initBigInt(basis[i])
+
+      echo toString(summa)
+
+      if summa < basis: 
+        result[i] = summa
+      else: 
+        result[i] = summa mod basis
+
+      #echo toString(result[i])
+
+proc RNSmult*(rnsnumb1: RNSnumb, rnsnumb2: RNSnumb, basis: Modules): RNSnumb =
+  for i in low(basis)..high(basis):
+    result[i] = ((rnsnumb1[i] * rnsnumb1[i]) mod initBigInt(basis[i]))
+
 when isMainModule:
   var
-    test: BigInt  = initBigInt(25)
-    mods: Modules = [3, 5, 7]
-    resl: RNSnumb = toRNS(test, mods)
+    test0: BigInt  = initBigInt(25)
+    test1: BigInt  = initBigInt(9)
+    test2: BigInt  = initBigInt(14)
 
-  for i in 0..2:
-    echo resl[i]
+    modls: Modules = [2, 3, 5]
 
-  echo toString(resl)
+    numb1: RNSnumb = toRNS(test1, modls)
+    numb2: RNSnumb = toRNS(test2, modls)
+
+  echo toString(RNSadd(numb1, numb2, modls))
 
 
 
