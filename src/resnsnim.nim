@@ -43,6 +43,11 @@ proc RNSmult*(rnsnumb1: RNSnumb, rnsnumb2: RNSnumb, basis: Modules): RNSnumb =
     else: 
       result[i] = multp mod basis
 
+proc BasisMAX*(basis: Modules): int =
+  result = 1
+  for i in low(basis)..high(basis):
+    result = result * basis[i]
+
 when isMainModule:
   var
     test0: BigInt  = initBigInt(25)
