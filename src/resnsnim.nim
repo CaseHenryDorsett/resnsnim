@@ -4,9 +4,12 @@
 
 import bigints
 
+const
+  basisLen: int = 3
+
 type
-  Modules = array[3, int]
-  RNSnumb = array[3, BigInt]
+  Modules = array[basisLen, int]
+  RNSnumb = array[basisLen, BigInt]
 
 proc toRNS*(number: BigInt, basis: Modules): RNSnumb =
   for i in low(basis)..high(basis):
